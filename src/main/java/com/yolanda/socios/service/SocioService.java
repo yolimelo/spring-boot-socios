@@ -15,5 +15,6 @@ public interface SocioService {
 	Optional<Socio> getSocioById(Long socioId);
 
 	Socio updateSocio(Socio socio);
-
+	
+	List<Socio> getSocioBysocioBaja ();
 }

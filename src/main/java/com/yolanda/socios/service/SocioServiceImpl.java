@@ -1,5 +1,6 @@
 package com.yolanda.socios.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,6 +53,7 @@ public class SocioServiceImpl implements SocioService {
 			socioBd.setDni(socio.getDni());
 			socioBd.setEmail(socio.getEmail());
 			socioBd.setNumeroTelefono(socio.getNumeroTelefono());
+			socioBd.setFechaBaja(socio.getFechaBaja());
 			
 			socioRepository.save(socioBd);
 			
@@ -59,6 +61,13 @@ public class SocioServiceImpl implements SocioService {
 		}
 		
 		return result; 
+		
+	}
+
+	@Override
+	public List<Socio> getSocioBysocioBaja() {
+		
+		return socioRepository.findByFechaBajaNotNull();
 	}
 
 }

@@ -60,5 +60,11 @@ public class SocioController {
 		
 		return ResponseEntity.ok(result);
 	}
+	
+	@GetMapping("/socio/baja")
+	ResponseEntity <List<Socio>> socioBaja() {
+		System.out.println("Consultando todos los socios dados de baja.\n");
+		return ResponseEntity.ok(socioSevice.getSocioBysocioBaja());
+	}
 
 }
