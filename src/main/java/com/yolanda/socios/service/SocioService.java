@@ -1,5 +1,6 @@
 package com.yolanda.socios.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,4 +18,10 @@ public interface SocioService {
 	Socio updateSocio(Socio socio);
 	
 	List<Socio> getSocioBysocioBaja ();
+	
+	List<Socio> getSociosBajaDesdeFecha(LocalDate fecha);
+	
+	List<Socio> getSociosBajaHastaFecha(LocalDate fecha);
+	
+	
 }

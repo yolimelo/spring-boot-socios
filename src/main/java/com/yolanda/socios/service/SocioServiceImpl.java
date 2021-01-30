@@ -1,5 +1,6 @@
 package com.yolanda.socios.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -66,8 +67,17 @@ public class SocioServiceImpl implements SocioService {
 
 	@Override
 	public List<Socio> getSocioBysocioBaja() {
-		
 		return socioRepository.findByFechaBajaNotNull();
+	}
+
+	@Override
+	public List<Socio> getSociosBajaDesdeFecha(LocalDate fecha) {
+		return socioRepository.findByFechaBajaGreaterThanEqual(fecha);
+	}
+
+	@Override
+	public List<Socio> getSociosBajaHastaFecha(LocalDate fecha) {
+		return socioRepository.findByFechaBajaLessThanEqual(fecha);
 	}
 
 }

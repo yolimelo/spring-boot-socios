@@ -1,11 +1,13 @@
 package com.yolanda.socios.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yolanda.socios.entities.Socio;
@@ -52,7 +55,7 @@ public class SocioController {
 		System.out.println("Borrando un nuevo socio.\n");
 	}
 
-	@PutMapping("/socio/{id}")
+	@PutMapping("/socio")
 	ResponseEntity<Socio> modificarSocio(@RequestBody Socio socio) {
 		Socio result = socioSevice.updateSocio(socio);
 		
@@ -60,11 +63,32 @@ public class SocioController {
 		
 		return ResponseEntity.ok(result);
 	}
-	
+
 	@GetMapping("/socio/baja")
-	ResponseEntity <List<Socio>> socioBaja() {
-		System.out.println("Consultando todos los socios dados de baja.\n");
-		return ResponseEntity.ok(socioSevice.getSocioBysocioBaja());
+	ResponseEntity <List<Socio>> socioBajaDesdeFecha(@RequestParam (required = false) @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate fechaDesde,@RequestParam (required = false) @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate fechaHasta) {
+		List<Socio> result = null;
+		
+		if (fechaDesde == null) {
+			System.out.println("Consultando todos los socios dados de baja.\n");
+			result = socioSevice.getSocioBysocioBaja();
+		}
+		else {
+			System.out.println("Consultando todos los socios dados de baja a partir de la fecha dada.\n");
+
+			result = socioSevice.getSociosBajaDesdeFecha(fechaDesde);
+		}
+		
+		if (fechaHasta == null) {
+			System.out.println("Consultando todos los socios dados de baja.\n");
+			result = socioSevice.getSocioBysocioBaja();
+		}
+		else {
+			System.out.println("Consultando todos los socios dados de baja hasta la fecha dada.\n");
+
+			result = socioSevice.getSociosBajaHastaFecha(fechaHasta);
+		}
+
+		return ResponseEntity.ok(result); 
 	}
 
 }
